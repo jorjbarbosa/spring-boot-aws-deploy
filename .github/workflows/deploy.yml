@@ -26,3 +26,13 @@ jobs:
 
       - name: Push image docker
         run: docker push jorgebarbosa/spring_deploy
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull Docker Image
+        run: docker pull jorgebarbosa/spring_deploy:latest
+
+      - name: Run Docker container
+        run: docker run -d -p 8080:8080 --name server jorgebarbosa/spring_deploy
